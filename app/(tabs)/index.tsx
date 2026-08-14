@@ -1,98 +1,157 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { useRouter } from 'expo-router';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import Animated, { FadeInDown } from 'react-native-reanimated';
 
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+import { ContentLinkRow } from '@/components/content-card';
+import { HomeHero } from '@/components/home-hero';
+import { Card } from '@/components/ui/card';
+import { PressableScale } from '@/components/ui/pressable-scale';
+import { Screen } from '@/components/ui/screen';
+import { SectionHeader } from '@/components/ui/section-header';
+import { AppText } from '@/components/ui/text';
+import { allSamples, contentStats, isSample, recentlyAdded } from '@/content/registry';
+import { API_LABEL, type ApiKind } from '@/content/types';
+import { useTheme } from '@/theme/theme-provider';
+import { accentFor } from '@/theme/tokens';
 
 export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+  const { spacing } = useTheme();
+  const router = useRouter();
+  const recent = recentlyAdded(5);
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+  const openRandomSample = () => {
+    const samples = allSamples();
+    if (samples.length === 0) return;
+    const picked = samples[Math.floor(Math.random() * samples.length)];
+    router.push({ pathname: '/sample/[id]', params: { id: picked.id } });
+  };
+
+  return (
+    <Screen>
+      <ScrollView
+        contentContainerStyle={{ padding: spacing.lg, paddingBottom: spacing.xxl, gap: spacing.xl }}
+        showsVerticalScrollIndicator={false}>
+        <Animated.View entering={FadeInDown.duration(420)}>
+          <HomeHero stats={{ samples: contentStats.samples, references: contentStats.references }} />
+        </Animated.View>
+
+        <Animated.View entering={FadeInDown.delay(80).duration(420)}>
+          <RandomButton onPress={openRandomSample} />
+        </Animated.View>
+
+        <Animated.View entering={FadeInDown.delay(140).duration(420)} style={{ gap: spacing.md }}>
+          <SectionHeader title="API から探す" caption="どちらの書き方で作られたサンプルか" />
+          <View style={[styles.apiRow, { gap: spacing.md }]}>
+            <ApiTile api="animated" count={contentStats.animated} />
+            <ApiTile api="reanimated" count={contentStats.reanimated} />
+          </View>
+        </Animated.View>
+
+        <Animated.View entering={FadeInDown.delay(200).duration(420)} style={{ gap: spacing.sm }}>
+          <SectionHeader title="最近追加したもの" caption="新しい順に 5 件" />
+          {recent.length === 0 ? (
+            <Card tone="alt">
+              <AppText variant="caption">
+                content/ にファイルを置くとここに出てきます。
+              </AppText>
+            </Card>
+          ) : (
+            recent.map((item) => (
+              <ContentLinkRow key={isSample(item) ? item.id : item.slug} item={item} />
+            ))
+          )}
+        </Animated.View>
+      </ScrollView>
+    </Screen>
+  );
+}
+
+function RandomButton({ onPress }: { onPress: () => void }) {
+  const { colors, radius, spacing } = useTheme();
+
+  return (
+    <PressableScale onPress={onPress} haptic>
+      <View
+        style={[
+          styles.random,
+          {
+            backgroundColor: colors.surface,
+            borderColor: colors.borderStrong,
+            borderRadius: radius.lg,
+            padding: spacing.lg,
+            gap: spacing.md,
+          },
+        ]}>
+        <View style={[styles.randomIcon, { backgroundColor: colors.brandSoft }]}>
+          <MaterialIcons name="casino" size={20} color={colors.brand} />
+        </View>
+        <View style={{ flex: 1 }}>
+          <AppText variant="bodyStrong">ランダムに 1 つ見る</AppText>
+          <AppText variant="caption">気分転換に。忘れかけていたサンプルが出てくる</AppText>
+        </View>
+        <MaterialIcons name="chevron-right" size={20} color={colors.textFaint} />
+      </View>
+    </PressableScale>
+  );
+}
+
+function ApiTile({ api, count }: { api: ApiKind; count: number }) {
+  const { colors, radius, spacing } = useTheme();
+  const router = useRouter();
+  const accent = accentFor(colors, api);
+
+  return (
+    <PressableScale
+      style={styles.apiTileWrapper}
+      onPress={() => router.push({ pathname: '/samples', params: { api } })}>
+      <View
+        style={[
+          styles.apiTile,
+          {
+            backgroundColor: accent.soft,
+            borderRadius: radius.lg,
+            padding: spacing.lg,
+            gap: spacing.xs,
+          },
+        ]}>
+        <MaterialIcons
+          name={api === 'animated' ? 'timeline' : 'bolt'}
+          size={22}
+          color={accent.fg}
+        />
+        <AppText variant="bodyStrong" style={{ color: accent.fg }}>
+          {API_LABEL[api]}
+        </AppText>
+        <AppText variant="caption" style={{ color: accent.fg, opacity: 0.8 }}>
+          {count} 件のサンプル
+        </AppText>
+      </View>
+    </PressableScale>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
+  random: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+    borderWidth: StyleSheet.hairlineWidth,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  randomIcon: {
+    width: 38,
+    height: 38,
+    borderRadius: 19,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  apiRow: {
+    flexDirection: 'row',
+  },
+  apiTileWrapper: {
+    flex: 1,
+  },
+  apiTile: {
+    minHeight: 108,
+    justifyContent: 'center',
   },
 });
