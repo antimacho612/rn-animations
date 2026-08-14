@@ -1,6 +1,7 @@
 import type { ComponentType } from 'react';
 
 import type { EasingPreset } from '@/lib/easing-presets';
+import { Tag } from '@/lib/tags';
 
 /** サンプルがどちらの API で書かれているか */
 export type ApiKind = 'animated' | 'reanimated';
@@ -43,7 +44,7 @@ export type SampleDefinition = {
   api: ApiKind;
   /** 一覧カードに出る 1〜2 行の説明 */
   summary: string;
-  tags: string[];
+  tags: Tag[];
   /** 'YYYY-MM-DD'。ホームの「最近追加」の並び順に使う */
   addedAt: string;
   controls?: SampleControls;
@@ -76,7 +77,7 @@ export type ReferenceDefinition = {
   category: ReferenceCategory;
   /** 一覧カードに出る 1〜2 行の説明 */
   summary: string;
-  tags: string[];
+  tags: Tag[];
   addedAt: string;
   /** 関連するサンプルの id */
   related?: string[];

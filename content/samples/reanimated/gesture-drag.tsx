@@ -9,6 +9,7 @@ import Animated, {
 
 import { defineSample } from '@/content/define';
 import type { SampleRenderProps } from '@/content/types';
+import { TAGS } from '@/lib/tags';
 
 function Demo({ playToken }: SampleRenderProps) {
   const offsetX = useSharedValue(0);
@@ -74,7 +75,7 @@ export default defineSample({
   title: 'ドラッグして離すと戻る',
   api: 'reanimated',
   summary: 'ジェスチャーで動かし、離したら withSpring で元の位置へ。指の動きに毎フレーム追従する。',
-  tags: ['gesture', 'spring'],
+  tags: [TAGS.GESTURE, TAGS.SPRING],
   addedAt: '2026-08-11',
   controls: {
     duration: false,

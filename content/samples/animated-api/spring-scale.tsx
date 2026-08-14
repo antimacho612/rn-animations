@@ -3,6 +3,7 @@ import { Animated, StyleSheet, Text } from 'react-native';
 
 import { defineSample } from '@/content/define';
 import type { SampleRenderProps } from '@/content/types';
+import { TAGS } from '@/lib/tags';
 
 function Demo({ playToken }: SampleRenderProps) {
   const scale = useRef(new Animated.Value(0.4)).current;
@@ -46,7 +47,7 @@ export default defineSample({
   title: 'ばねで拡大（spring）',
   api: 'animated',
   summary: 'timing とは違い、duration も easing も取らない物理ベースのアニメーション。',
-  tags: ['spring', 'transform'],
+  tags: [TAGS.SPRING, TAGS.TRANSFORM],
   addedAt: '2026-08-13',
   controls: {
     duration: false,

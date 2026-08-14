@@ -3,6 +3,7 @@ import { Animated, StyleSheet, View } from 'react-native';
 
 import { defineSample } from '@/content/define';
 import type { SampleRenderProps } from '@/content/types';
+import { TAGS } from '@/lib/tags';
 
 const DISTANCE = 70;
 
@@ -66,7 +67,7 @@ export default defineSample({
   title: '連続移動（sequence / parallel）',
   api: 'animated',
   summary: 'sequence で順番に、parallel で同時に。複数のアニメーションを組み合わせる。',
-  tags: ['transform', '合成'],
+  tags: [TAGS.TRANSFORM, TAGS.PARALLEL, TAGS.SEQUENCE],
   addedAt: '2026-08-14',
   controls: {
     duration: { default: 1200, min: 300, max: 4000 },

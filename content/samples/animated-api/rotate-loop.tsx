@@ -3,6 +3,7 @@ import { Animated, StyleSheet, Text } from 'react-native';
 
 import { defineSample } from '@/content/define';
 import type { SampleRenderProps } from '@/content/types';
+import { TAGS } from '@/lib/tags';
 
 function Demo({ playToken, duration, easing }: SampleRenderProps) {
   const rotate = useRef(new Animated.Value(0)).current;
@@ -53,7 +54,7 @@ export default defineSample({
   title: '無限回転ループ（loop）',
   api: 'animated',
   summary: 'Animated.loop で timing を無限に繰り返す。スピナーなどの基本形。',
-  tags: ['loop', 'transform'],
+  tags: [TAGS.LOOP, TAGS.TRANSFORM],
   addedAt: '2026-08-14',
   controls: {
     duration: { default: 2000, min: 500, max: 5000 },

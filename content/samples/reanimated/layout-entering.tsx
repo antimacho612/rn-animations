@@ -4,6 +4,7 @@ import Animated, { FadeInDown, FadeOut, LinearTransition } from 'react-native-re
 
 import { defineSample } from '@/content/define';
 import type { SampleRenderProps } from '@/content/types';
+import { TAGS } from '@/lib/tags';
 
 const ITEMS = [0, 1, 2, 3];
 const COLORS = ['#8B5CF6', '#6366F1', '#22D3EE', '#34D399'];
@@ -58,7 +59,7 @@ export default defineSample({
   title: 'レイアウトアニメーション（entering）',
   api: 'reanimated',
   summary: 'マウント時の登場アニメーションを 1 行で。delay をずらすと気持ちよく並ぶ。',
-  tags: ['layout animation', 'entering'],
+  tags: [TAGS.LAYOUT_ANIMATION, TAGS.ENTERING],
   addedAt: '2026-08-12',
   controls: {
     duration: { default: 900, min: 300, max: 3000 },

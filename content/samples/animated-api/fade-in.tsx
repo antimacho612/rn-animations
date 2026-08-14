@@ -3,6 +3,7 @@ import { Animated, StyleSheet, Text } from 'react-native';
 
 import { defineSample } from '@/content/define';
 import type { SampleRenderProps } from '@/content/types';
+import { TAGS } from '@/lib/tags';
 
 function Demo({ playToken, duration, easing }: SampleRenderProps) {
   // 1. アニメーションさせたい値を Animated.Value で持つ
@@ -46,7 +47,7 @@ export default defineSample({
   title: 'フェードイン',
   api: 'animated',
   summary: 'opacity を 0 → 1 に変化させる、Animated API の最小構成。',
-  tags: ['opacity', '基本'],
+  tags: [TAGS.OPACITY],
   addedAt: '2026-08-14',
   controls: {
     duration: { default: 800, min: 100, max: 3000 },

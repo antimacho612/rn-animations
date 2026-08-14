@@ -10,6 +10,7 @@ import Animated, {
 
 import { defineSample } from '@/content/define';
 import type { SampleRenderProps } from '@/content/types';
+import { TAGS } from '@/lib/tags';
 
 function Demo({ playToken, duration, easing }: SampleRenderProps) {
   // Shared Value は UI スレッド側に住む値。React の state とは別物
@@ -45,7 +46,7 @@ export default defineSample({
   title: 'Shared Value ひとつで動かす',
   api: 'reanimated',
   summary: '0 → 1 の progress から位置・角度・角丸・色をまとめて派生させる。',
-  tags: ['useSharedValue', 'interpolate'],
+  tags: [TAGS.SHARED_VALUE, TAGS.INTERPOLATE],
   addedAt: '2026-08-14',
   controls: {
     duration: { default: 900, min: 100, max: 3000 },

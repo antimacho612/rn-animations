@@ -1,11 +1,12 @@
 import { callout, code, defineReference, md, sample } from '@/content/define';
+import { TAGS } from '@/lib/tags';
 
 export default defineReference({
   slug: 'loop-animations',
   title: '繰り返しアニメーション（loop / repeat）',
   category: 'common',
   summary: 'Animated.loop と withRepeat で同じ動きを繰り返す。無限ループの止め方と反転の作り方。',
-  tags: ['loop', '基本'],
+  tags: [TAGS.BASIC],
   addedAt: '2026-08-14',
   related: ['rotate-loop'],
   body: [

@@ -1,11 +1,12 @@
 import { callout, code, defineReference, md, sample } from '@/content/define';
+import { TAGS } from '@/lib/tags';
 
 export default defineReference({
   slug: 'easing-basics',
   title: 'Easing の選び方',
   category: 'common',
   summary: '同じ duration でも印象が変わる。用途ごとの定番カーブを覚える。',
-  tags: ['easing', '基本'],
+  tags: [TAGS.BASIC],
   addedAt: '2026-08-12',
   related: ['shared-value-box'],
   body: [

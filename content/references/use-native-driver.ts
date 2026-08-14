@@ -1,11 +1,12 @@
 import { callout, code, defineReference, md, sample } from '@/content/define';
+import { TAGS } from '@/lib/tags';
 
 export default defineReference({
   slug: 'use-native-driver',
   title: 'useNativeDriver について',
   category: 'animated-api',
   summary: 'アニメーションを JS スレッドから切り離す仕組みと、使えるプロパティの制限。',
-  tags: ['パフォーマンス', 'Animated'],
+  tags: [TAGS.PERFORMANCE],
   addedAt: '2026-08-13',
   related: ['fade-in'],
   body: [

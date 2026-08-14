@@ -1,11 +1,12 @@
 import { callout, code, defineReference, md, sample } from '@/content/define';
+import { TAGS } from '@/lib/tags';
 
 export default defineReference({
   slug: 'reanimated-shared-value',
   title: 'Shared Value と useAnimatedStyle',
   category: 'reanimated',
   summary: 'Reanimated の中心にある 2 つの概念。state ではなく Shared Value で値を持つ理由。',
-  tags: ['useSharedValue', '基本'],
+  tags: [TAGS.BASIC],
   addedAt: '2026-08-14',
   related: ['shared-value-box', 'gesture-drag'],
   body: [

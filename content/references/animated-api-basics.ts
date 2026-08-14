@@ -1,11 +1,12 @@
 import { callout, code, defineReference, md, sample } from '@/content/define';
+import { TAGS } from '@/lib/tags';
 
 export default defineReference({
   slug: 'animated-api-basics',
   title: 'Animated API の基本',
   category: 'animated-api',
   summary: 'React Native 標準の Animated API を「値・定義・ラップ」の 3 ステップで押さえる。',
-  tags: ['基本', 'Animated'],
+  tags: [TAGS.BASIC],
   addedAt: '2026-08-14',
   related: ['fade-in', 'translate-sequence'],
   body: [
