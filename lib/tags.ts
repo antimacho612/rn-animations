@@ -17,6 +17,7 @@ export const TAGS = {
   GESTURE: 'gesture',
   LAYOUT_ANIMATION: 'layout animation',
   ENTERING: 'entering',
+  SCROLL: 'scroll',
 } as const;
 
 export type Tag = (typeof TAGS)[keyof typeof TAGS];
