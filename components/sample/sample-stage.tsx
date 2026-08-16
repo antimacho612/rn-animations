@@ -1,5 +1,6 @@
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { StyleSheet, View, type ViewStyle } from 'react-native';
+import { useState } from 'react';
+import { StyleSheet, View, type LayoutChangeEvent, type ViewStyle } from 'react-native';
 
 import { PressableScale } from '@/components/ui/pressable-scale';
 import { AppText } from '@/components/ui/text';
@@ -75,16 +76,24 @@ export function SampleStage({
 
 /** 方眼の背景。hairline を並べているだけなので描画コストは低い */
 function Grid({ color }: { color: string }) {
-  const lines = Array.from({ length: 14 }, (_, index) => index + 1);
+  const [size, setSize] = useState({ width: 0, height: 0 });
+
+  const handleLayout = ({ nativeEvent }: LayoutChangeEvent) => {
+    setSize({ width: nativeEvent.layout.width, height: nativeEvent.layout.height });
+  };
+
+  const hLines = Array.from({ length: Math.ceil(size.height / GRID_STEP) }, (_, i) => i + 1);
+  const vLines = Array.from({ length: Math.ceil(size.width / GRID_STEP) }, (_, i) => i + 1);
+
   return (
-    <View style={StyleSheet.absoluteFill} pointerEvents="none">
-      {lines.map((index) => (
+    <View style={StyleSheet.absoluteFill} pointerEvents="none" onLayout={handleLayout}>
+      {hLines.map((index) => (
         <View
           key={`h-${index}`}
           style={[styles.hLine, { top: index * GRID_STEP, backgroundColor: color }]}
         />
       ))}
-      {lines.map((index) => (
+      {vLines.map((index) => (
         <View
           key={`v-${index}`}
           style={[styles.vLine, { left: index * GRID_STEP, backgroundColor: color }]}
