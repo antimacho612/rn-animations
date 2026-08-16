@@ -45,7 +45,7 @@ export default defineSample({
   title: 'サンプルのタイトル',
   api: 'reanimated',
   summary: '一覧カードに出る 1〜2 行の説明。',
-  tags: ['タグ'],
+  tags: [],
   addedAt: '2026-01-01',
   controls: {
     // duration: false,          // ← spring 系などスライダーを無効にしたいとき
