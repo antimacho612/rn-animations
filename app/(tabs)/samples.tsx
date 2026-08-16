@@ -12,6 +12,7 @@ import { SegmentedControl } from '@/components/ui/segmented-control';
 import { AppText } from '@/components/ui/text';
 import { allSamples, sampleTags, searchSamples } from '@/content/registry';
 import type { ApiKind } from '@/content/types';
+import type { Tag } from '@/lib/tags';
 import { useTheme } from '@/theme/theme-provider';
 
 type ApiFilter = 'all' | ApiKind;
@@ -27,7 +28,7 @@ export default function SamplesScreen() {
   const params = useLocalSearchParams<{ api?: string }>();
 
   const [api, setApi] = useState<ApiFilter>('all');
-  const [tag, setTag] = useState<string | null>(null);
+  const [tag, setTag] = useState<Tag | null>(null);
   const [query, setQuery] = useState('');
 
   // ホームの API タイルから遷移してきたときは、その API で絞り込んだ状態で開く

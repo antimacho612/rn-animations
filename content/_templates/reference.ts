@@ -15,7 +15,7 @@ export default defineReference({
   title: 'ページのタイトル',
   category: 'common', // 'animated-api' | 'reanimated' | 'common'
   summary: '一覧カードに出る 1〜2 行の説明。',
-  tags: ['タグ'],
+  tags: [],
   addedAt: '2026-01-01',
   // 関連するサンプルの id
   related: [],

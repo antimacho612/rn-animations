@@ -4,6 +4,7 @@ import type {
   ReferenceDefinition,
   SampleDefinition,
 } from '@/content/types';
+import type { Tag } from '@/lib/tags';
 
 /**
  * `content/samples` と `content/references` を Metro の require.context で自動収集する。
@@ -115,15 +116,15 @@ export function isSample(
  * タグ・検索
  * ------------------------------------------------------------------ */
 
-export function sampleTags(): string[] {
+export function sampleTags(): Tag[] {
   return uniqueSorted(samples.flatMap((item) => item.tags));
 }
 
-export function referenceTags(): string[] {
+export function referenceTags(): Tag[] {
   return uniqueSorted(references.flatMap((item) => item.tags));
 }
 
-function uniqueSorted(values: string[]): string[] {
+function uniqueSorted(values: Tag[]): Tag[] {
   return [...new Set(values)].sort((a, b) => a.localeCompare(b, 'ja'));
 }
 
